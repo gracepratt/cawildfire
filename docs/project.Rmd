@@ -1,0 +1,413 @@
+---
+title: "How differing climate scenarios affect wildfire impacts on California endangered species"
+author: "Grace Pratt"
+output: github_document 
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library("tidyverse")
+library("jsonlite")
+library("httr")
+library(raster)
+library(sf)
+library(ggpmisc)
+library(rgdal)
+library(tmap)
+```
+
+Wildfire has long been a part of the California landscape. Both natural and human caused fires have shaped the landscape and created unique ecosystems that depend on fire to maintain ecosystem processes. Many species in California are pyrogenic, meaning they tolerate or require fire for their life cycle. However, over the last century, humans have worked to suppress the previous fire regimes. Fire suppression has led to increased biomass fuel in many ecosystems, increasing fire severity when fires do occur in California [Source](http://p8888-ucelinks.cdlib.org.libproxy.berkeley.edu/sfx_local?isbn=9780520246058&title=Fire+in+California%E2%80%99s+Ecosystems&genre=book&sid=jstor%3Ajstor&eisbn=9780520932272#). 
+
+In the future, climate change will increase wildfire frequency and severity in California. As the fire regime in Calfornia changes again, it will be important to consider the impacts on both humans and wildlife [Source](http://climateassessment.ca.gov/techreports/docs/20180827-Projections_CCCA4-CEC-2018-014.pdf).
+
+### This project
+
+For this project I will answer these 3 questions:
+1. How do predicted wildfire scenarios differ between the CNRM-CM5 and HadGEM2-ES climate models?
+2. Where in California do we expect increases in wildfires?
+3. How will the habitats of California endangered species be affected by future climate scenarios?
+
+## Modeling Future Wildfire Scenarios
+
+In order to predict future wildfire regimes, climate scientists have created models outlining potential future climate change scenarios. These models are then used to simulate fire regimes.
+
+[Cal-Adapt](https://cal-adapt.org/) provides data to give insight into how climate change could affect California at a local level, including how climate change could impact fire. Cal-Adapt provides data on the impacts of climate change for 4 different climate models: CanESM2, CNRM-CM5, HadGEM2, and MIROC5, which model physical processes and reactions to increasing CO2 levels. Cal-Adapt also provides data for 2 different Representative Concentration Pathways (RCP): 4.5 and 8.5, which represent different projections of CO2 in our atmosphere. These models create projections for California from 1954-2100. 
+
+![Future Temperatures under RCPs of 4.5 vs 8.5](images/climate_scenarios.jpg)
+
+### Models used in this analysis
+
+For this project, I wanted to compare how different models predicted future California wildfires. To have a comparison between models that were very different, I decided to compare the CNRM-CM5 climate model, which generally has cooler and wetter predictions for future California climates, and the HadGEM2-ES model, which includes higher and drier predictions. 
+
+In order to ensure that my data is up to date, I will use the Cal-Adapt API to access the data. Here, the data is raster files modeling hectares burned per cell under each climate model and RCP scenario. In total, I will be looking at 4 different scenarios: HadGEM2 4.5, HadGEM2 8.5, CNRM-CM5 4.5, and CNRM-CM5 8.5.
+
+```{r api function, include=FALSE}
+api_fn <- function(model, temp){
+  api_call <- paste0("api.cal-adapt.org/api/series/fire_", model, "_rcp", temp, "_bau_mu/rasters/?pagesize=147")
+  api <- GET(api_call)
+  data <- content(api, as = "text")
+  df <- fromJSON(data, simplifyVector = FALSE, simplifyDataFrame = TRUE)
+  df
+}
+```
+
+
+```{r api call, include=FALSE}
+temperatures <- c("45", "85") #the 2 RCPs we want to look at
+
+out_had <- map2("HadGEM2-ES", temperatures, api_fn)
+out_cnrm <- map2("CNRM-CM5", temperatures, api_fn)
+
+had4.5_API <- out_had[1][[1]]$results
+had8.5_API <- out_had[2][[1]]$results
+
+cnrm4.5_API <- out_cnrm[1][[1]]$results
+cnrm8.5_API <- out_cnrm[2][[1]]$results
+
+```
+
+```{r rasters, include = FALSE}
+had4.5_urls <- had4.5_API$image #getting the .tif files from the URL
+had8.5_urls <- had8.5_API$image
+
+cnrm4.5_urls <- cnrm4.5_API$image
+cnrm8.5_urls <- cnrm8.5_API$image
+```
+
+
+```{r include = FALSE}
+map(had4.5_urls, function(x) download.file(x, file.path("rasters/had4.5/", basename(x))))
+had4.5_rasters <- map((file.path("rasters/had4.5/", basename(had4.5_urls))), raster)
+
+map(had8.5_urls, function(x) download.file(x, file.path("rasters/had8.5/", basename(x))))
+had8.5_rasters <- map((file.path("rasters/had8.5/", basename(had8.5_urls))), raster)
+
+map(cnrm4.5_urls, function(x) download.file(x, file.path("rasters/cnrm4.5/", basename(x))))
+cnrm4.5_rasters <- map((file.path("rasters/cnrm4.5/", basename(cnrm4.5_urls))), raster)
+
+map(cnrm8.5_urls, function(x) download.file(x, file.path("rasters/cnrm8.5/", basename(x))))
+cnrm8.5_rasters <- map((file.path("rasters/cnrm8.5/", basename(cnrm8.5_urls))), raster)
+```
+
+
+## Initial Visualizations of Wildfire Scenarios
+
+In order to get a sense of how the scenarios differ, I extracted the average and maximum hectares burned for each raster for each year. Here you can see the plots comparing the different scenarios. 
+
+```{r, include= FALSE}
+getValuesSet <- function(raster) {
+  average <- cellStats(raster, stat = 'mean')
+  max <- cellStats(raster, stat = 'max')
+  data.frame(average, max)
+}
+```
+
+```{r, include= FALSE}
+#Getting stats for 4.5 and 8.5 scenarios for both models and creating dataframes with them: 
+had4.5_df <- map_df(had4.5_rasters, getValuesSet)
+had8.5_df <- map_df(had8.5_rasters, getValuesSet)
+
+cnrm4.5_df <- map_df(cnrm4.5_rasters, getValuesSet)
+cnrm8.5_df <- map_df(cnrm8.5_rasters, getValuesSet)
+
+had_df <- bind_cols(had4.5_df, had8.5_df) %>%
+  mutate(year = c(1954:2100))%>%
+  dplyr::select(year, average_4.5 = average, max_4.5 = max, average_8.5 = average1, max_8.5 = max1)
+
+cnrm_df <- bind_cols(cnrm4.5_df, cnrm8.5_df) %>%
+  mutate(year = c(1954:2100))%>%
+  dplyr::select(year, average_4.5 = average, max_4.5 = max, average_8.5 = average1, max_8.5 = max1)
+```
+
+
+```{r echo = FALSE}
+#Had 4.5 v 8.5
+ggplot(had_df, aes(x = year)) + 
+  geom_line(aes(y= average_8.5, colour = "8.5")) +
+  geom_line(aes(y = average_4.5, colour = "4.5")) + 
+  labs(title = "Average hectares burned using the HadGEM2-ES model", y = "average hectares burned per cell", colour = "RCP")
+```
+
+```{r echo = FALSE}
+#CNRM 4.5 v 8.5
+ggplot(cnrm_df, aes(x = year)) + 
+  geom_line(aes(y= average_8.5, colour = "8.5")) + 
+  geom_line(aes(y = average_4.5, colour = "4.5")) +
+  labs(title = "Average hectares burned using the CNRM-CM5 model", y = "average hectares burned per cell", colour = "RCP")
+```
+
+As we can see, the CNRM model overall had higher averages for hectares burned when compared to the HadGEM2 model. The CNRM model was much more sensitive to changes in the RCP. 
+
+### Exploring the 8.5 RCP Scenarios
+
+Drought scenarios heavily influence wildfire regimes, and California is very likely to expereience extended droughts in the future. For this analysis, I want to see how drought could potentially impact future wildfires. In these climate models, the RCP 8.5 scenario in the HadGEM2 model shows a drought occuring in California from roughly 2051-2070. In order to make the scope of the analysis more digestible and have the ability to analyze the effects of drought, I will be further analyzing only the RCP 8.5 scenarios.  
+ 
+First, I want to explore how the 8.5 scenarios differ for the 2 climate models overtime. 
+
+```{r echo = FALSE}
+#8.5 Had vs CNRM
+ggplot() + 
+  geom_line(aes(x = year, y= average_8.5, colour = "CNRM-CM5"), cnrm_df) + 
+  geom_line(aes(x = year, y= average_8.5, colour = "HadGEM2-ES"), had_df) + 
+  labs(title = "Average hectares burned at the 8.5 RCP", y = "average hectares burned per cell", 
+       colour = "Model")
+```
+
+We can see from this graph again that the HadGEM2 had some years of high average area burned more consistently across tine, while the CNRM model shows sharp increases in wildfire after 2050. Another important note to make is that these are models. **All data shown is modeled data, including values in the past (which is why there are different values for average area burned). The only real recorded data included (data that is not a modeled projection) are the atmostpheric concentrations of CO2 from 1954–2005**
+
+However, wildfire is not experienced as an average across the entire state, some areas will experience much more burning than others. In order to see the extreme values, we can take a look at the max value for hectares burned in a single cell for both models. 
+
+```{r echo = FALSE}
+#8.5  max Had vs CNRM
+ggplot() + geom_line(aes(x = year, y= max_8.5, colour = "CNRM-CM5"), cnrm_df) + 
+  geom_line(aes(x = year, y= max_8.5, colour = "HadGEM2-ES"), had_df) + 
+  labs(title = "Maximum hectares burned at the 8.5 RCP", y = "maximum hectares burned in 1 cell", 
+       colour = "Model")
+```
+
+Overall, we can see that, while the HadGEM2 shows some extreme values throughout. However, compared to looking at the averages, the models match much more closely for their respecitve max values and show similar trajectories after 2050.  
+
+## Where will fire occur?
+
+While we can gather a lot of info from just observing the differences in the average and max hectares burned per cell, this doesn't tell us anything about where in California these fires will occur. In order to see where in California fires will occur over time, we can plot the rasters of the area burned per cell. 
+
+In order to make easier comparisons across time, I averaged the value for each cell over each decade starting in 1960. 
+
+```{r include = FALSE}
+#creating a raster stack to make the data easier to work with
+had8.5_stack <- stack(had8.5_rasters)
+
+cnrm8.5_stack <- stack(cnrm8.5_rasters)
+```
+
+```{r ten year average, include=FALSE}
+ten_yr_avg <- function(raster_stack){
+  
+  empty_stack <- stack()
+  
+  for (year in seq(7, 137, by=10)){
+  avg_raster <- raster::mean(raster_stack[[year:(year + 9)]])
+  empty_stack <- stack(empty_stack, avg_raster)
+  }
+  
+  empty_stack
+  
+}
+```
+
+```{r include = FALSE}
+had_10_yr <- ten_yr_avg(had8.5_stack)
+cnrm_10_yr <- ten_yr_avg(cnrm8.5_stack)
+
+decades <- c("1960s", "1970s", "1980s", "1990s", "2000s", "2010s", "2020s", "2030s", "2040s","2050s", "2060s", "2070s", "2080s", "2090s")
+```
+
+```{r echo= FALSE}
+pal = c('#ffffcc','#ffeda0','#fed976','#feb24c','#fd8d3c','#fc4e2a','#e31a1c','#bd0026','#800026')
+tm_shape(had_10_yr) + 
+  tm_raster(breaks = seq(0, 500, by = 50), palette = pal, title = "ha burned") + 
+  tm_layout(main.title = "HadGEM2 Wildfires 1960-2100",
+            legend.title.size = 1, 
+            panel.labels = decades,
+            frame = F, 
+            legend.outside = T) 
+```
+
+```{r echo = FALSE, fig.width = 6}
+tm_shape(cnrm_10_yr) + 
+  tm_raster(breaks = seq(0, 500, by = 50), palette = pal, title = "ha burned") + 
+  tm_layout(main.title = "CNRM Wildfires 1960-2100",
+            legend.title.size = 1, 
+            panel.labels = decades,
+            frame = F, 
+            legend.outside = T) 
+```
+
+
+Overall, we can see that for both scenarios there there are larger fires in the Sierra Nevada mountain range and in other forested areas of Northern California. We can also see that the amount of area burned in the Sierras and forests is expected to increase more over time compared to other areas of the state for both models.
+
+
+In order to directly compare the spatial differences between the 2 models we can plot their differences between them. Here, the bluer tones reflect areas where the HadGEM2 model predicted more wildfire, while redder tones show areas where the CNRM predicted more fire. 
+
+```{r warning = FALSE, message = FALSE, echo = FALSE}
+diff <- cnrm_10_yr - had_10_yr
+colors <- c('#d53e4f','#f46d43','#fdae61','#fee08b','#ffffbf','#e6f598','#abdda4','#66c2a5','#3288bd')
+pal2 <- rev(colors)
+
+tm_shape(diff) + 
+  tm_raster(breaks = seq(-300, 200, by = 50), palette = pal2) + 
+  tm_layout(main.title = "Differences between HadGEM2 and CNRM 1960-2100",
+            legend.title.size = 1, 
+            panel.labels = decades,
+            frame = F, 
+            legend.outside = T) 
+```
+
+We can see that most of the time, the models predicted the same spatial variation of wildfire. However, we can see that overall, the HadGEM2 tended to predict more wildfire in northern California, particularly in the northwest. 
+
+## Impacts of Fire on Endangered Species
+
+There is a major concern about the effect of wildfires on species in California, particularly endangered species. Although many species, including endangered species, will be impacted by wildfire, I wanted to focus my efforts on analyzing 2 of the endangered species that are predicted to be negatively impacted by wildfire: the Sierra Nevada Yellow-Legged Frog and the California Condor. 
+
+There is a lot to unpack when it comes to predicting the impacts of fire on species including fire location, severity, and duration. I will focus on fire location since that is that is what data exists for. Specifically, I will focus on the amount of burned area predicted within the critical habitats of each species. Shapefiles for the critical habitats are available from the [US Fish and Wildlife Service](https://ecos.fws.gov/ecp/report/table/critical-habitat.html).
+
+### Sierra Nevada Yellow-Legged Frog
+
+![Yellow-Legged Frog](images/yellow-legged_frog.jpg)
+
+The Sierra Nevada yellow-legged frog is found across the Sierra Nevada mountain range. While these species were once abundant in alpine lakes and streams, due to the introduction of foreign fish and pathogenic chytrid fungus this species is now federally endangered [Source](https://www.nps.gov/yose/learn/nature/snylfrog.htm). 
+
+If this species was abundant, then biologists would not be as concerned with how fires could impact this species. However, given the vulnerabilty of the species, scientists are concerned with the impacts that fire and, more importantly, fire fighting could have on the species [Source](https://www.fs.usda.gov/Internet/FSE_DOCUMENTS/stelprd3811864.pdf).
+
+While there have not been any empirical studies on the yellow-legged frog specifically, fire fighters can take water from pools and streams where frogs reside, which can place stress on these frogs and other species [Source](https://www.fs.usda.gov/Internet/FSE_DOCUMENTS/stelprd3811864.pdf). This is a trend that could continue or even expand given current political trends [Source](https://abc7news.com/politics/trump-directs-agencies-to-override-protections-for-ca-endangered-species/3912323/). Another concern for the yellow-legged frog is the widespread release of flame retardant, particularly sodium ferrocyanide, which is highly toxic to amphibians [Source](https://www.fs.usda.gov/Internet/FSE_DOCUMENTS/stelprd3811864.pdf). 
+
+Firstly, in order to verify that the yellow-legged frog lives in areas expected to be affected by wildfire in both models in the future, I will plot the critical habitat of the species over the 2090s raster of the HadGEM2 vs. CNRM models. 
+
+```{r include = FALSE}
+sierra_yellow_legged_frog <- st_read("FCH_Rana_sierrae_20160826/FCH_Rana_sierrae_20160826.shp")
+```
+
+
+```{r echo= FALSE, message = FALSE}
+tm_shape(diff[[14]]) + 
+  tm_raster(breaks = seq(-300, 200, by = 50), palette = pal2, title = "ha burned") +
+  tm_shape(sierra_yellow_legged_frog) + 
+  tm_polygons(alpha = 0) + 
+  tm_layout(main.title = "Yellow-legged frog habitat: HadGEM2 vs CNRM in 2090",
+            legend.title.size = 1,
+            frame = F, 
+            legend.outside = T) 
+```
+
+
+We can already see that the frog's habitat is more affected in the CNRM model. In order to see how wildfire will increase or decrease in yellow-legged frog habitat over time, I will plot the total area burned in the species' critical habitat during each decade. 
+
+```{r include = FALSE}
+#function to build a tidy table of extracted values from each part of the critical habitat
+df_builder <- function(values){
+  df <- data.frame(values[[1]])
+  for (i in 2:length(values)){
+    df <- df %>% bind_rows(data.frame(values[[i]]))
+  }
+  df %>%
+    setNames(decades) %>%
+    gather(key = "decade", value = "area_burned")
+}
+```
+
+```{r include = FALSE}
+frog_had_values <- raster::extract(had_10_yr, sierra_yellow_legged_frog)
+
+frog_had_df <- df_builder(frog_had_values)
+  
+frog_had_average <- frog_had_df %>%
+  group_by(decade) %>%
+  summarize(HadGEM2 = sum(area_burned))
+
+frog_cnrm_values <-raster::extract(cnrm_10_yr, sierra_yellow_legged_frog)
+
+frog_cnrm_df <- df_builder(frog_cnrm_values)
+  
+frog_cnrm_average <- frog_cnrm_df %>%
+  group_by(decade) %>%
+  summarize(CNRM = sum(area_burned))
+
+frog_average_df <- frog_had_average %>%
+  mutate(CNRM = frog_cnrm_average$CNRM) %>%
+  gather(key = decade, value = "area_burned") %>%
+  rename(model = decade)%>%
+  mutate(year = c(seq(1960, 2090, by = 10), seq(1960,2090, by = 10)))
+```
+
+```{r echo= FALSE}
+ggplot(frog_average_df, aes(x = year, y = area_burned, fill = model)) + 
+  geom_col(position=position_dodge()) + 
+  labs(title = "Total Area Burned in Sierra Yellow-Legged Frog Habitat",
+       x = "decade",
+       y = "total ha burned") + 
+  theme(legend.text = element_text())
+```
+
+Given the current projections for increases in fire in the critical habitat of the yellow-legged frog, it's important to further study the effects of fires on these species. 
+
+
+### California Condor
+
+
+![California Condor](images/california-condor.png)
+
+The California condor is one of the largest flying birds in the world. However, in the the 19th and 20th centuries, their numbers dropped so severely that they were considered to be extinct in the wild in 1987. Luckily, scientists were able to rehabilitate captive birds and began rereleasing them in 1992. 
+
+Due to current scientific monitoring of the species, much is now known about what threatens condor populations. The largest threat to condors is lead polution, but the third largest threat to condors is wildfire. Therefore it is important to consider how wildfire will change in condor habitats in the future*https://www.sciencenews.org/blog/wild-things/wildfires-are-unexpected-threat-california-condors*.
+
+Again, I will start by plotting the critical habitat over the raster.
+
+```{r include = FALSE}
+ca_condor <- st_read("FCH_Gymnogyps_californianus_19670311 (1)/FCH_Gymnogyps_californianus_19670311.shp")
+```
+
+```{r echo= FALSE}
+tm_shape(diff[[14]]) + 
+  tm_raster(breaks = seq(-300, 200, by = 50), palette = pal2, title = "ha burned") +
+  tm_shape(ca_condor) + 
+  tm_polygons(alpha = 0) + 
+  tm_layout(main.title = "California Condor Habitat: HadGEM2 vs CNRM in 2090",
+            legend.title.size = 1,
+            frame = F, 
+            legend.outside = T) 
+```
+
+This time, we can see that there is a smaller difference between the models in the condor habitat. We will see if this is consistent over time using a bar graph.
+
+```{r include= FALSE}
+condor_had_values <- raster::extract(had_10_yr, ca_condor)
+
+condor_had_df <- df_builder(condor_had_values)
+  
+condor_had_average <- condor_had_df %>%
+  group_by(decade) %>%
+  summarize(HadGEM2 = sum(area_burned))
+
+condor_cnrm_values <-raster::extract(cnrm_10_yr, ca_condor)
+
+condor_cnrm_df <- df_builder(condor_cnrm_values)
+  
+condor_cnrm_average <- condor_cnrm_df %>%
+  group_by(decade) %>%
+  summarize(CNRM = sum(area_burned))
+
+condor_average_df <- condor_had_average %>%
+  mutate(CNRM = condor_cnrm_average$CNRM) %>%
+  gather(key = decade, value = "area_burned") %>%
+  rename(model = decade)%>%
+  mutate(year = c(seq(1960, 2090, by = 10), seq(1960,2090, by = 10)))
+```
+
+
+```{r echo = FALSE}
+ggplot(condor_average_df, aes(x = year, y = area_burned, fill = model)) + 
+  geom_col(position=position_dodge()) + 
+  labs(title = "Total Area Burned in California Condor Habitat",
+       x = "decade",
+       y = "total ha burned") + 
+  theme(legend.text = element_text())
+
+```
+
+As we can see, there is not likely going to be extreme increases in fire in California condor habitat. However, given our current knowledge of wildfire threats to the condor and projected increases in wildfire in condor critical habitat, it will still be imporant to monitor condors in this area and take precautions to reduce wildfire risk.  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

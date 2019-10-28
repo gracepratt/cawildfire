@@ -1,0 +1,374 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<metadata>
+	<idinfo>
+		<citation>
+			<citeinfo>
+				<origin>U.S. Fish and Wildlife Service</origin>
+				<pubdate>20160826</pubdate>
+				<title>Final Critical Habitat for Sierra Nevada yellow-legged frog (Rana sierrae)</title>
+				<geoform>vector digital data</geoform>
+				<onlink>http://ecos.fws.gov/docs/crithab/zip/FCH_Rana_sierrae_20160826.zip</onlink>
+			</citeinfo>
+		</citation>
+		<descript>
+			<abstract>These data identify, in general, the areas of final critical habitat for Sierra Nevada yellow-legged frog (Rana sierrae).</abstract>
+			<purpose>Critical habitat constitutes areas considered essential for the conservation of a listed species. These areas provide notice to the public and land managers of the importance of the areas to the conservation of this species. Special protections and/or restrictions are possible in areas where Federal funding, permits, licenses, authorizations, or actions occur or are required.</purpose>
+		</descript>
+		<status>
+			<progress>Complete</progress>
+			<update>None planned</update>
+		</status>
+		<spdom>
+			<bounding>
+				<westbc>000</westbc> 
+				<eastbc>000</eastbc>
+				<northbc>000</northbc>
+				<southbc>000</southbc>
+			</bounding>
+		</spdom>
+		<keywords>
+			<theme>
+				<themekey>U.S. Fish and Wildlife Service</themekey>
+				<themekey>Critical Habitat</themekey>
+				<themekey>critical</themekey>
+				<themekey>habitat</themekey>
+				<themekey>environment</themekey>
+				<themekey>Endangered species</themekey>
+				<themekey>Threatened species</themekey>
+				<themekey>Listed species</themekey>
+				<themekey>biota</themekey>
+				<themekt>ISO 19115 Topic Categories</themekt>
+				<themekey>NGDA</themekey>
+				<themekey>National Geospatial Data Asset</themekey>
+				<themekey>Biodiversity and Ecosystems</themekey>
+				<themekt>NGDA Portfolio Themes</themekt>
+				<themekey>Rana sierrae</themekey>
+				<themekey>Sierra Nevada yellow-legged frog</themekey>
+			</theme>
+			<place>
+				<placekt>None</placekt>
+				<placekey>California</placekey>
+			</place>
+		</keywords>
+		<accconst>None</accconst>
+		<useconst>The U.S. Fish and Wildlife Service shall not be held liable for improper or incorrect use of the data described and/or contained herein. These data and related graphics (e.g., GIF or JPG format files) are not legal documents and are not intended to be used as such. The information contained in these data may be dynamic and could change over time. The data are not better than the original sources from which they were derived. It is the responsibility of the data user to use the data appropriately and consistent within the limitations of geospatial data in general and these data in particular. The related graphics are intended to aid the data user in acquiring relevant data; it is not appropriate to use the related graphics as data. The U.S. Fish and Wildlife Service gives no warranty, expressed or implied, as to the accuracy, reliability, or completeness of these data. It is strongly recommended that these data be directly acquired from an authorized U.S. Fish and Wildlife Service source and not indirectly through other sources which may have changed the data in some way. Although these data have been processed successfully on computer systems at the U.S. Fish and Wildlife Service or through cooperators/contractors, no warranty expressed or implied is made regarding the utility of the data on other systems for general or scientific purposes, nor shall the act of distribution constitute any such warranty. This disclaimer applies both to individual use of the data and aggregate use with other data.  The data are not to be used for legal survey use. Please refer to Federal Register Citation Number 81 FR 59046, published 20160826 for the legal critical habitat information.</useconst>
+		<ptcontac>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Fish and Wildlife Service, Sacramento Fish and Wildlife Office</cntorg>
+				</cntorgp>
+				<cntpos>GIS Branch Chief</cntpos>
+				<cntaddr>
+					<addrtype>Mailing and Physical Address</addrtype>
+					<address>2800 Cottage Way</address>
+					<city>Sacramento</city>
+					<state>CA</state>
+					<postal>95825</postal>
+					<country>US</country>
+				</cntaddr>
+				<cntvoice>916-414-6708</cntvoice>
+				<cntfax>916-414-6713</cntfax>
+				<cntemail>cheryl_hickam@fws.gov</cntemail>
+				<cntinst>Email, fax, or telephone</cntinst>
+			</cntinfo>
+		</ptcontac>
+		<datacred>U.S. Fish and Wildlife Service, Sacramento Fish and Wildlife Office</datacred>
+		<native>Environment as of Metadata Creation: Microsoft Windows 7 Version 6.1 (Build 7601) Service Pack 1; Esri ArcGIS 10.3.1 (Build 4959) Service Pack N/A (Build N/A)</native>
+	</idinfo>
+	<dataqual>
+		<attracc>
+			<attraccr>No formal attribute accuracy tests were conducted.</attraccr>
+		</attracc>
+		<logic>No formal logical accuracy tests were conducted.</logic>
+		<complete>Data set is considered complete for the information presented, as described in the abstract. Users are advised to read the rest of the metadata record carefully for additional details.</complete>
+		<posacc>
+			<horizpa>
+				<horizpar>A formal accuracy assessment of the horizontal positional information in the data set has not been conducted.</horizpar>
+			</horizpa>
+			<vertacc>
+				<vertaccr>A formal accuracy assessment of the vertical positional information in the data set has either not been conducted, or is not applicable.</vertaccr>
+			</vertacc>
+		</posacc>
+		<lineage>
+			<srcinfo>
+				<srccite>
+					<citeinfo>
+						<origin>Office of the Federal Register</origin>
+						<pubdate>20160826</pubdate>
+						<title>Federal Register</title>
+						<pubinfo>
+							<pubplace>Washington, DC</pubplace>
+							<publish>Federal Register</publish>
+						</pubinfo>
+						<onlink>http://www.archives.gov/federal-register/publications/index.html</onlink>
+					</citeinfo>
+				</srccite>
+				<typesrc>Digital and/or Hardcopy Resources</typesrc>
+				<srccitea>Federal Register Document</srccitea>
+				<srccontr>Refer to the Federal Register 81 FR 59046, 20160826.</srccontr>
+			</srcinfo>
+			<procstep>
+				<procdesc>The features in this shapefile represent final critical habitat subunits
+				for the Sierra Nevada yellow-legged frog. These polygon features were digitized based
+				on boundary delineations drawn on paper maps by the project's lead biologist. Reference data
+				layers on the paper maps included California watershed boundaries, (Watershed Boundary Dataset (WBD)),
+				streams with arrows displaying flow direction, (National Hydrography Dataset (NHD), MaxEnt model habitat quality
+				criteria (Derived by Roland Knapp), a hillshade surface derived from a 30-by 30 meter California digital elevation model(DEM),
+				a polygon displaying a 3 Kilometer extant population buffer (a 3 Kilometer buffer created around extant populations of the Sierra Nevada yellow-legged frog),
+				a polygon displaying a 1000 meter distance aggregation of the MaxEnt model habitat quality criteria polygons (a 1000 meter distance aggregaton polygon created by the Aggregate Polygons tool),
+				and lastly NGS topographic data. Heads-up digitizing of the paper map delineations was performed using these reference layers as guidelines to trace the boundaries of final critical habitat subunits.
+				The final critical habitat subunits were digitized at a scale of 1:24,000 using a UTM Zone 10, NAD 83 Coordinate System. For more detailed information
+				on the lead biologist's criteria for delineating the final critical habitat subunits, please refer to the "Final Critical Habitat Designation" document,
+				under the section "Criteria used to Identify Critical Habitat".</procdesc>
+				<procdate>20160826</procdate>
+			</procstep>
+		</lineage>
+	</dataqual>
+	<spdoinfo>
+		<direct>Vector</direct>
+		<ptvctinf>
+			<sdtsterm>
+				<sdtstype>GT-polygon composed of chains</sdtstype>
+				<ptvctcnt>42</ptvctcnt>
+			</sdtsterm>
+		</ptvctinf>
+	</spdoinfo>
+	<eainfo>
+		<detailed>
+			<enttyp>
+				<enttypd>Final Critical Habitat for Rana sierrae (Sierra Nevada yellow-legged frog)</enttypd>
+				<enttypds>U.S. Fish and Wildlife Service</enttypds>
+			</enttyp>
+			<attr>
+				<attrlabl>FID</attrlabl>
+				<attrdef>Internal feature number.</attrdef>
+				<attrdefs>ESRI</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>Shape</attrlabl>
+				<attrdef>Feature geometry.</attrdef>
+				<attrdefs>ESRI</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>COMNAME</attrlabl>
+				<attrdef>Legal common name of the species</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>SCINAME</attrlabl>
+				<attrdef>Binomial or trinomial scientific name</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>SPCODE</attrlabl>
+				<attrdef>Unique Species Code referencing the species for the critical habitat being submitted</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>VIPCODE</attrlabl>
+				<attrdef>Unique Population Code referencing the species for the critical habitat being submitted</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>UNIT</attrlabl>
+				<attrdef>Critical habitat unit code</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>SUBUNIT</attrlabl>
+				<attrdef>Critical Habitat subunit code</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>UNITNAME</attrlabl>
+				<attrdef>Critical Habitat unit name</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>SUBUNITNAM</attrlabl>
+				<attrdef>Critical Habitat subunit name</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>STATUS</attrlabl>
+				<attrdef>Critical Habitat Status</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>FINAL</edomv>
+						<edomvd>Final Critical Habitat</edomvd>
+						<edomvds>U.S. Fish and Wildlife Service</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>PROPOSED</edomv>
+						<edomvd>Proposed Critical Habitat</edomvd>
+						<edomvds>U.S. Fish and Wildlife Service</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>EXCLUDED</edomv>
+						<edomvd>Excluded (4A3 or 4B2)</edomvd>
+						<edomvds>U.S. Fish and Wildlife Service</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>VACATED</edomv>
+						<edomvd>Vacated by Court Order</edomvd>
+						<edomvds>U.S. Fish and Wildlife Service</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+			<attr>
+				<attrlabl>LEADOFFICE</attrlabl>
+				<attrdef>Lead Office Cost Center Code</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>COOPOFFICE</attrlabl>
+				<attrdef>Cooperating Office Cost Center Code</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>COOPOFMORE</attrlabl>
+				<attrdef>Additional Cooperating Office Cost Center Codes</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>FEDREG</attrlabl>
+				<attrdef>Federal Register ID</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>PUBDATE</attrlabl>
+				<attrdef>Federal Register publication date</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>EFFECTDATE</attrlabl>
+				<attrdef>Effective date for critical habitat designation</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>VACATEDATE</attrlabl>
+				<attrdef>Date critical habitat designation vacated</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+			</attr>
+			<attr>
+				<attrlabl>ACCURACY</attrlabl>
+				<attrdef>Accuracy items or concerns</attrdef>
+				<attrdefs>U.S. Fish and Wildlife Service</attrdefs>
+				<attrdomv>
+					<edom>
+						<edomv>Temporal Adjustment</edomv>
+						<edomvd>Data is dependent on temporal factors</edomvd>
+						<edomvds>U.S. Fish and Wildlife Service</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>Seasonal Adjustment</edomv>
+						<edomvd>Data is dependent on seasonal factors</edomvd>
+						<edomvds>U.S. Fish and Wildlife Service</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>Tidal Adjustment</edomv>
+						<edomvd>Data is dependent on tidal fluctuations</edomvd>
+						<edomvds>U.S. Fish and Wildlife Service</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>Historical Adjustment</edomv>
+						<edomvd>Reference features, streams, boundaries, etc. have changed</edomvd>
+						<edomvds>U.S. Fish and Wildlife Service</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>Source Adjustment</edomv>
+						<edomvd>Source data is inconsistent or coarse</edomvd>
+						<edomvds>U.S. Fish and Wildlife Service</edomvds>
+					</edom>
+				</attrdomv>
+				<attrdomv>
+					<edom>
+						<edomv>Other</edomv>
+						<edomvd>Other concern</edomvd>
+						<edomvds>U.S. Fish and Wildlife Service</edomvds>
+					</edom>
+				</attrdomv>
+			</attr>
+		</detailed>
+	</eainfo>
+	<distinfo>
+		<distrib>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Fish and Wildlife Service</cntorg>
+				</cntorgp>
+				<cntpos>ECOS Development Team</cntpos>
+				<cntaddr>
+					<addrtype>Mailing and Physical</addrtype>
+					<address>1201 Oakridge Dr.</address>
+					<city>Fort Collins</city>
+					<state>CO</state>
+					<postal>80525</postal>
+					<country>US</country>
+				</cntaddr>
+				<cntvoice>970-266-2999</cntvoice>
+				<cntemail>http://ecos.fws.gov/ecp/helpTickets/create</cntemail>
+			</cntinfo>
+		</distrib>
+		<distliab>See access and use constraints information.</distliab>
+		<stdorder>
+			<digform>
+				<digtinfo>
+					<formname>Web Feature Service - All Critical Habitat</formname>
+				</digtinfo>
+				<digtopt>
+				  <onlinopt>
+					<computer>
+					  <networka>
+						<networkr>http://services.arcgis.com/QVENGdaPbd4LUkLV/arcgis/rest/services/USFWS_Critical_Habitat/FeatureServer</networkr>
+					  </networka>
+					</computer>
+				  </onlinopt>
+				</digtopt>
+			</digform>
+			<fees>None</fees>
+			<ordering>This shapefile is downloadable from the US Fish and Wildlife Service's Critical Habitat Portal. See the "Online Source" section.</ordering>
+		</stdorder>
+	</distinfo>
+	<metainfo>
+		<metd>20180906</metd>
+		<metc>
+			<cntinfo>
+				<cntorgp>
+					<cntorg>U.S. Fish and Wildlife Service, Sacramento Fish and Wildlife Office</cntorg>
+				</cntorgp>
+				<cntpos>GIS Branch Chief</cntpos>
+				<cntaddr>
+					<addrtype>Mailing and Physical</addrtype>
+					<address>2800 Cottage Way</address>
+					<city>Sacramento</city>
+					<state>CA</state>
+					<postal>95825</postal>
+					<country>US</country>
+				</cntaddr>
+				<cntvoice>916-414-6708</cntvoice>
+				<cntfax>916-414-6713</cntfax> 
+				<cntemail>cheryl_hickam@fws.gov</cntemail>
+				<cntinst>Email, fax, or telephone</cntinst> 
+			</cntinfo>
+		</metc>
+		<metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+		<metstdv>FGDC-STD-001-1998</metstdv>
+		<mettc>local time</mettc>
+	</metainfo>
+	<Esri><CreaDate>20180906</CreaDate><CreaTime>12581600</CreaTime><ArcGISstyle>FGDC CSDGM Metadata</ArcGISstyle><SyncOnce>TRUE</SyncOnce><DataProperties><itemProps><itemLocation><linkage Sync="TRUE">file://\\IFW9ECOS-LW739\C$\Users\ragilbert\Documents\Tickets\Crithab_files\CritHabMetadataTemplate_FGDC</linkage><protocol Sync="TRUE">Local Area Network</protocol></itemLocation></itemProps><copyHistory><copy source="C:\Users\ragilbert\Documents\ArcGIS\MetadataWizardToolbox\workingdir\CritHabMetadataTemplate_FGDC" dest="\\IFW9ECOS-LW739\C$\Users\ragilbert\Documents\Tickets\Crithab_files\CritHabMetadataTemplate_FGDC" date="20180906" time="12581600"></copy></copyHistory></DataProperties></Esri></metadata>
