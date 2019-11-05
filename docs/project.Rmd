@@ -16,9 +16,9 @@ library(rgdal)
 library(tmap)
 ```
 
-Wildfire has long been a part of the California landscape. Both natural and human caused fires have shaped the landscape and created unique ecosystems that depend on fire to maintain ecosystem processes. Many species in California are pyrogenic, meaning they tolerate or require fire for their life cycle. However, over the last century, humans have worked to suppress the previous fire regimes. Fire suppression has led to increased biomass fuel in many ecosystems, increasing fire severity when fires do occur in California [Source](http://p8888-ucelinks.cdlib.org.libproxy.berkeley.edu/sfx_local?isbn=9780520246058&title=Fire+in+California%E2%80%99s+Ecosystems&genre=book&sid=jstor%3Ajstor&eisbn=9780520932272#). 
+Wildfire has long been a part of the California landscape. Both natural and human caused fires have shaped the landscape and created unique ecosystems that depend on fire to maintain ecosystem processes. Many species in California are pyrogenic, meaning they tolerate or require fire for their life cycle. However, over the last century, humans have worked to suppress the previous fire regimes. Fire suppression has led to increased biomass fuel in many ecosystems, [increasing fire severity when fires do occur in California](http://p8888-ucelinks.cdlib.org.libproxy.berkeley.edu/sfx_local?isbn=9780520246058&title=Fire+in+California%E2%80%99s+Ecosystems&genre=book&sid=jstor%3Ajstor&eisbn=9780520932272#). 
 
-In the future, climate change will increase wildfire frequency and severity in California. As the fire regime in Calfornia changes again, it will be important to consider the impacts on both humans and wildlife [Source](http://climateassessment.ca.gov/techreports/docs/20180827-Projections_CCCA4-CEC-2018-014.pdf).
+In the future, climate change will increase wildfire frequency and severity in California. As the fire regime in Calfornia changes again, it will be important to consider the impacts [on both humans and wildlife](http://climateassessment.ca.gov/techreports/docs/20180827-Projections_CCCA4-CEC-2018-014.pdf).
 
 ### This project
 
@@ -255,11 +255,11 @@ There is a lot to unpack when it comes to predicting the impacts of fire on spec
 
 ![Yellow-Legged Frog](images/yellow-legged_frog.jpg)
 
-The Sierra Nevada yellow-legged frog is found across the Sierra Nevada mountain range. While these species were once abundant in alpine lakes and streams, due to the introduction of foreign fish and pathogenic chytrid fungus this species is now federally endangered [Source](https://www.nps.gov/yose/learn/nature/snylfrog.htm). 
+The Sierra Nevada yellow-legged frog is found across the Sierra Nevada mountain range. While these species were once abundant in alpine lakes and streams, due to the [introduction of foreign fish and pathogenic chytrid fungus](https://www.nps.gov/yose/learn/nature/snylfrog.htm) this species is now federally endangered. 
 
-If this species was abundant, then biologists would not be as concerned with how fires could impact this species. However, given the vulnerabilty of the species, scientists are concerned with the impacts that fire and, more importantly, fire fighting could have on the species [Source](https://www.fs.usda.gov/Internet/FSE_DOCUMENTS/stelprd3811864.pdf).
+If this species was abundant, then biologists would not be as concerned with how fires could impact this species. However, given the vulnerabilty of the species, scientists are concerned with the impacts that fire and, more importantly, fire fighting [could have on the species](https://www.fs.usda.gov/Internet/FSE_DOCUMENTS/stelprd3811864.pdf).
 
-While there have not been any empirical studies on the yellow-legged frog specifically, fire fighters can take water from pools and streams where frogs reside, which can place stress on these frogs and other species [Source](https://www.fs.usda.gov/Internet/FSE_DOCUMENTS/stelprd3811864.pdf). This is a trend that could continue or even expand given current political trends [Source](https://abc7news.com/politics/trump-directs-agencies-to-override-protections-for-ca-endangered-species/3912323/). Another concern for the yellow-legged frog is the widespread release of flame retardant, particularly sodium ferrocyanide, which is highly toxic to amphibians [Source](https://www.fs.usda.gov/Internet/FSE_DOCUMENTS/stelprd3811864.pdf). 
+While there have not been any empirical studies on the yellow-legged frog specifically, fire fighters can take water from pools and streams where frogs reside, which can [place stress](https://www.fs.usda.gov/Internet/FSE_DOCUMENTS/stelprd3811864.pdf) on these frogs and other species . This is a trend that could continue or even expand [given current political trends](https://abc7news.com/politics/trump-directs-agencies-to-override-protections-for-ca-endangered-species/3912323/). Another concern for the yellow-legged frog is the widespread release of flame retardant, particularly [sodium ferrocyanide](https://www.fs.usda.gov/Internet/FSE_DOCUMENTS/stelprd3811864.pdf), which is highly toxic to amphibians . 
 
 Firstly, in order to verify that the yellow-legged frog lives in areas expected to be affected by wildfire in both models in the future, I will plot the critical habitat of the species over the 2090s raster of the HadGEM2 vs. CNRM models. 
 
@@ -338,7 +338,7 @@ Given the current projections for increases in fire in the critical habitat of t
 
 The California condor is one of the largest flying birds in the world. However, in the the 19th and 20th centuries, their numbers dropped so severely that they were considered to be extinct in the wild in 1987. Luckily, scientists were able to rehabilitate captive birds and began rereleasing them in 1992. 
 
-Due to current scientific monitoring of the species, much is now known about what threatens condor populations. The largest threat to condors is lead polution, but the third largest threat to condors is wildfire. Therefore it is important to consider how wildfire will change in condor habitats in the future*https://www.sciencenews.org/blog/wild-things/wildfires-are-unexpected-threat-california-condors*.
+Due to current scientific monitoring of the species, much is now known about what threatens condor populations. The largest threat to condors is lead polution, but the third largest threat to condors is wildfire. Therefore it is important to consider how wildfire will change in [condor habitats](https://www.sciencenews.org/blog/wild-things/wildfires-are-unexpected-threat-california-condors) in the future.
 
 Again, I will start by plotting the critical habitat over the raster.
 
