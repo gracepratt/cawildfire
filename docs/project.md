@@ -225,10 +225,7 @@ Therefore it is important to consider how wildfire will change in
 habitats](https://www.sciencenews.org/blog/wild-things/wildfires-are-unexpected-threat-california-condors)
 in the future.
 
-Again, I will start by plotting the critical habitat over the
-    raster.
-
-    ## Variable "layer.2" contains positive and negative values, so midpoint is set to 0. Set midpoint = NA to show the full spectrum of the color palette.
+Again, I will start by plotting the critical habitat over the raster.
 
 ![](project_files/figure-gfm/unnamed-chunk-19-1.png)<!-- -->
 

@@ -273,7 +273,7 @@ tm_shape(diff[[14]]) +
   tm_raster(breaks = seq(-300, 200, by = 50), palette = pal2, title = "ha burned") +
   tm_shape(sierra_yellow_legged_frog) + 
   tm_polygons(alpha = 0) + 
-  tm_layout(main.title = "Yellow-legged frog habitat: HadGEM2 vs CNRM in 2090",
+  tm_layout(main.title = "Frog habitat 2090: HadGEM2 vs CNRM",
             legend.title.size = 1,
             frame = F, 
             legend.outside = T) 
@@ -346,12 +346,12 @@ Again, I will start by plotting the critical habitat over the raster.
 ca_condor <- st_read("FCH_Gymnogyps_californianus_19670311 (1)/FCH_Gymnogyps_californianus_19670311.shp")
 ```
 
-```{r echo= FALSE}
+```{r echo= FALSE, warning = FALSE, message = FALSE}
 tm_shape(diff[[14]]) + 
   tm_raster(breaks = seq(-300, 200, by = 50), palette = pal2, title = "ha burned") +
   tm_shape(ca_condor) + 
   tm_polygons(alpha = 0) + 
-  tm_layout(main.title = "California Condor Habitat 2090: HadGEM2 vs CNRM in 2090",
+  tm_layout(main.title = "Condor Habitat 2090: HadGEM2 vs CNRM",
             legend.title.size = 0.5,
             frame = F, 
             legend.outside = T) 
@@ -359,7 +359,7 @@ tm_shape(diff[[14]]) +
 
 This time, we can see that there is a smaller difference between the models in the condor habitat. We will see if this is consistent over time using a bar graph.
 
-```{r include= FALSE}
+```{r include= FALSE, warning = FALSE, message = FALSE, echo = FALSE}
 condor_had_values <- raster::extract(had_10_yr, ca_condor)
 
 condor_had_df <- df_builder(condor_had_values)
@@ -384,7 +384,7 @@ condor_average_df <- condor_had_average %>%
 ```
 
 
-```{r echo = FALSE}
+```{r warning = FALSE, message = FALSE, echo = FALSE}
 ggplot(condor_average_df, aes(x = year, y = area_burned, fill = model)) + 
   geom_col(position=position_dodge()) + 
   labs(title = "Total Area Burned in California Condor Habitat",
