@@ -351,8 +351,8 @@ tm_shape(diff[[14]]) +
   tm_raster(breaks = seq(-300, 200, by = 50), palette = pal2, title = "ha burned") +
   tm_shape(ca_condor) + 
   tm_polygons(alpha = 0) + 
-  tm_layout(main.title = "California Condor Habitat: HadGEM2 vs CNRM in 2090",
-            legend.title.size = 1,
+  tm_layout(main.title = "California Condor Habitat 2090: HadGEM2 vs CNRM in 2090",
+            legend.title.size = 0.5,
             frame = F, 
             legend.outside = T) 
 ```
